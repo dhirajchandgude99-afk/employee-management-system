@@ -5,6 +5,10 @@ import com.dhiraj.employee_management.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 
 @Service
 public class EmployeeService {
@@ -40,6 +44,17 @@ public class EmployeeService {
 
 public void deleteEmployee(Long id) {
     employeeRepository.deleteById(id);
+}
+public Page<Employee> getEmployeesWithPagination(int page, int size) {
+
+    Pageable pageable = PageRequest.of(page, size);
+
+    return employeeRepository.findAll(pageable);
+}
+
+public List<Employee> getEmployeesWithSorting(String field) {
+
+    return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, field));
 }
 }
 
