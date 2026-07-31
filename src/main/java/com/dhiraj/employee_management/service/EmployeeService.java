@@ -1,6 +1,7 @@
 package com.dhiraj.employee_management.service;
 
 import com.dhiraj.employee_management.entity.Employee;
+import com.dhiraj.employee_management.exception.EmployeeNotFoundException;
 import com.dhiraj.employee_management.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,10 @@ public class EmployeeService {
         return employeeRepository.findAll();
     }
     public Employee getEmployeeById(Long id) {
-        return employeeRepository.findById(id).orElse(null);
+
+    return employeeRepository.findById(id).orElseThrow(
+            () -> new EmployeeNotFoundException("Employee not found with ID : " + id)
+    );
     }
     public Employee updateEmployee(Long id, Employee employee) {
 

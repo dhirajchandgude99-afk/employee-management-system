@@ -2,6 +2,9 @@ package com.dhiraj.employee_management.controller;
 
 import com.dhiraj.employee_management.entity.Employee;
 import com.dhiraj.employee_management.service.EmployeeService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
@@ -15,7 +18,8 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-public Employee saveEmployee(@RequestBody Employee employee) {
+    public Employee saveEmployee(@Valid @RequestBody Employee employee) {
+
     return employeeService.saveEmployee(employee);
 }
 @GetMapping
@@ -27,8 +31,9 @@ public Employee getEmployeeById(@PathVariable Long id) {
     return employeeService.getEmployeeById(id);
 }
 @PutMapping("/{id}")
-public Employee updateEmployee(@PathVariable Long id,
-                               @RequestBody Employee employee) {
+public Employee updateEmployee(
+        @PathVariable Long id,
+        @Valid @RequestBody Employee employee) {
 
     return employeeService.updateEmployee(id, employee);
 }
