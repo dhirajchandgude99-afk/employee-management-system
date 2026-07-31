@@ -54,4 +54,23 @@ public List<Employee> getEmployeesWithSorting(
 
     return employeeService.getEmployeesWithSorting(field);
 }
+@GetMapping("/department/{department}")
+public List<Employee> getEmployeesByDepartment(@PathVariable String department) {
+    return employeeService.getEmployeesByDepartment(department);
+}
+
+@GetMapping("/salary/{salary}")
+public List<Employee> getEmployeesBySalaryGreaterThan(@PathVariable Double salary) {
+    return employeeService.getEmployeesBySalaryGreaterThan(salary);
+}
+
+@GetMapping("/native/department/{department}")
+public List<Employee> getEmployeesByDepartmentNative(@PathVariable String department) {
+    return employeeService.getEmployeesByDepartmentNative(department);
+}
+
+@GetMapping("/native/salary/{salary}")
+public List<Employee> getEmployeesBySalaryNative(@PathVariable Double salary) {
+    return employeeService.getEmployeesBySalaryNative(salary);
+}
 }

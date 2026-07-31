@@ -56,5 +56,20 @@ public List<Employee> getEmployeesWithSorting(String field) {
 
     return employeeRepository.findAll(Sort.by(Sort.Direction.ASC, field));
 }
+public List<Employee> getEmployeesByDepartment(String department) {
+    return employeeRepository.findByDepartment(department);
+}
+
+public List<Employee> getEmployeesBySalaryGreaterThan(Double salary) {
+    return employeeRepository.findBySalaryGreaterThan(salary);
+}
+
+public List<Employee> getEmployeesByDepartmentNative(String department) {
+    return employeeRepository.findByDepartmentNative(department);
+}
+
+public List<Employee> getEmployeesBySalaryNative(Double salary) {
+    return employeeRepository.findBySalaryNative(salary);
+}
 }
 
