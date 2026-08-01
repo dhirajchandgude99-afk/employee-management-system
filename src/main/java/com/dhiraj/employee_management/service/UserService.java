@@ -11,16 +11,15 @@ import com.dhiraj.employee_management.entity.User;
 public class UserService {
 
     @Autowired
-    private UserRepository repository;
+    private UserRepository userRepository;
 
     @Autowired
-    private PasswordEncoder encoder;
+    private PasswordEncoder passwordEncoder;
 
     public User register(User user) {
 
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        return repository.save(user);
+        return userRepository.save(user);
     }
-
 }
