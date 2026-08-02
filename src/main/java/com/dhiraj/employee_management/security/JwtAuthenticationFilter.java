@@ -3,7 +3,6 @@ package com.dhiraj.employee_management.security;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,9 +27,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(
-             HttpServletRequest request,
-             HttpServletResponse response,
-             FilterChain filterChain)
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
             throws ServletException, IOException {
 
         String authHeader = request.getHeader("Authorization");
@@ -42,7 +41,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String token = authHeader.substring(7);
 
+        System.out.println("TOKEN = " + token);
+
         String username = jwtService.extractUsername(token);
+
+        System.out.println("USERNAME FROM TOKEN = " + username);
 
         if (username != null
                 && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -50,7 +53,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             UserDetails userDetails =
                     userDetailsService.loadUserByUsername(username);
 
-            if (jwtService.validateToken(token, userDetails.getUsername())) {
+            System.out.println("USERNAME FROM DB = " + userDetails.getUsername());
+
+            boolean valid =
+                    jwtService.validateToken(token, userDetails.getUsername());
+
+            System.out.println("TOKEN VALID = " + valid);
+
+            if (valid) {
 
                 UsernamePasswordAuthenticationToken authentication =
                         new UsernamePasswordAuthenticationToken(
@@ -64,6 +74,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext()
                         .setAuthentication(authentication);
+
+                System.out.println("JWT Authentication Success");
             }
         }
 
